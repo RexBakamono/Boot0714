@@ -1,0 +1,22 @@
+引入maven依赖
+    <!-- swagger -->
+    <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger2</artifactId>
+        <version>2.9.2</version>
+    </dependency>
+    <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-swagger-ui</artifactId>
+        <version>2.9.2</version>
+    </dependency>
+
+编写SwaggerConfig配置文件
+
+类注解
+    @Api(value = "用户接口")
+方法注解
+    @ApiOperation(value = "用户登录接口")
+
+ui访问地址
+    http://ip:端口/swagger-ui.html

@@ -1,0 +1,96 @@
+server:
+  port: 81
+
+spring:
+  # mysql
+  datasource:
+    dynamic:
+      primary: rex1 # 配置默认数据库
+      datasource:
+        rex1: # 数据源1配置
+          url: jdbc:mysql://localhost:3306/rex1?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=GMT%2B8
+          username: root
+          password: root
+          driver-class-name: com.mysql.jdbc.Driver
+        rex2: # 数据源2配置
+          url: jdbc:mysql://localhost:3306/rex2?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=GMT%2B8
+          username: root
+          password: root
+          driver-class-name: com.mysql.jdbc.Driver
+      durid:
+        initial-size: 1
+        max-active: 20
+        min-idle: 1
+        max-wait: 60000
+
+  # redis
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: 123456
+    jedis:
+      pool:
+        max-active: 1024
+        max-wait: 10000
+        max-idle: 200
+        min-idle: 0
+    timeout: 10000
+    block-when-exhausted: true
+
+  # rabbitmq
+  rabbitmq:
+    username: root
+    password: root
+    virtual-host: /
+    host: localhost
+    port: 5672
+
+  # freemarker
+  freemarker:
+    template-loader-path: classpath:/ui
+    cache: false
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: request
+    suffix: .ftl
+
+# mybatis
+mybatis-plus:
+  type-aliases-package: com.rex.bean
+  mapper-locations: classpath:mybatis/*.xml
+
+# log4j2
+logging:
+  config: classpath:log4j2.xml
+  level:
+    cn.jay.repository: trace
+
+# 微信支付
+wechat-pay:
+  trade-type: 1
+  wechat-notify-url: https://test
+  appid: test
+  mch-id: test
+  key: test
+
+# 支付宝支付
+alipay:
+  appid: test
+  notify-url: https://test
+  public-key: test
+  private-key: test
+
+# 是否开启jwt验证
+jwt:
+  open: false
+
+mail:
+  host: smtp.qq.com
+  port: 587
+  network: test@qq.com
+  user: test@qq.com
+  pass: test

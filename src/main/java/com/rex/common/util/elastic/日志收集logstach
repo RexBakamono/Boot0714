@@ -1,0 +1,23 @@
+// bin目录新建logstash.conf
+input {
+    file {
+        path => "E:/logs/info/info.log"
+        type => "access-log"
+        start_position => "beginning"
+    }
+}
+
+filter {
+    grok{
+       match => {"message" => "(?:%{SYSLOGTIMESTAMP:syslog_timestamp}|%{TIMESTAMP_ISO8601:timestamp8601}) %{WORD:method} %{GREEDYDATA:pushios} %{WORD:method}\:\[%{NUMBER:costes}\]%{WORD:sencode}"}
+    }
+}
+
+output {
+	elasticsearch {
+		hosts => ["127.0.0.1:9200"]
+		index => "logs"
+	}
+}
+
+// bin目录启动 logstash -f logstash.conf

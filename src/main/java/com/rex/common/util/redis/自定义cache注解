@@ -1,0 +1,11 @@
+// 自定义 Cache 注解类
+
+// 添加 CachePoint aop 切面
+
+// 通过 @Pointcut("@annotation(com.rex.common.util.redis.Cache)") 切入到注解类
+
+// 通过后置通知 @AfterReturning(value = "cache()", returning = "value") 获取方法的参数，返回值
+
+// 通过 @AfterReturning(value = "cache() && @annotation(ca)", returning = "value")
+        public void doAfterReturning(JoinPoint joinPoint, Object value, Cache ca) {}
+        的 && @annotation(ca) 获取注解里面的值，保持 ca 这个名称一致

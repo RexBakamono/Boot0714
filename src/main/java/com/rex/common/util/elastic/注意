@@ -1,0 +1,116 @@
+// 创建索引，es6后一个索引只能有一个type（doc）,keyword不能分词，text可以
+// es7去除type
+PUT /post
+{
+  "mappings":{
+    "doc": {
+      "properties": {
+        "id": {
+          "type": "long"
+        },
+        "content": {
+          "type": "text"
+        }
+      }
+    }
+    }
+  }
+}
+
+// 查询索引字段
+GET /post/_mapping
+
+
+
+// 商品sku模型设计（SkuEsModel）
+PUT product
+{
+  "mappings": {
+    "doc": {
+      "properties": {
+      "skuId": {
+        "type": "long"
+      },
+      "spuId": {
+        "type": "keyword"
+      },
+      "skuTitle": {
+        "type": "text",
+        "analyzer": "ik_smart"
+      },
+      "skuPrice": {
+        "type": "keyword"
+      },
+      "skuImg": {
+        "type": "keyword",
+        "index": false,
+        "doc_values": false
+      },
+      "saleCount": {
+        "type": "long"
+      },
+      "hasStock": {
+        "type": "boolean"
+      },
+      "hotScore": {
+        "type": "long"
+      },
+      "brandId": {
+        "type": "long"
+      },
+      "catelogId": {
+        "type": "long"
+      },
+      "brandName": {
+        "type": "keyword",
+        "index": false,
+        "doc_values": false
+      },
+      "brandImg": {
+        "type": "keyword",
+        "index": false,
+        "doc_values": false
+      },
+      "catelogName": {
+        "type": "keyword",
+        "index": false,
+        "doc_values": false
+      },
+      "attrs": {
+        "type": "nested",
+        "properties": {
+          "attrId": {
+            "type": "long"
+          },
+          "attrName": {
+            "type": "keyword",
+            "index": false,
+            "doc_values": false
+          },
+          "attrValue": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+    }
+  }
+}
+
+
+// 多条件查询 BoolQueryBuilder
+SearchSourceBuilder builder = new SearchSourceBuilder();
+BoolQueryBuilder boolBuilder = QueryBuilders.boolQuery();
+MatchQueryBuilder term = QueryBuilders.matchQuery(field, value);
+NestedQueryBuilder nested = QueryBuilders.nestedQuery("attrs", QueryBuilders.matchQuery("attrs.attrValue", attrValue), ScoreMode.None);
+boolBuilder.must(term).must(nested);
+builder.query(boolBuilder);
+
+
+// 关闭monitoring
+PUT _cluster/settings
+{
+  "persistent": {
+    "xpack.monitoring.collection.enabled": false
+  }
+}
