@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Api("邮件")
+@Api(description = "邮件")
 @Slf4j
 @RestController
 @RequestMapping("/mail")
