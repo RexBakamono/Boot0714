@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api(value = "es搜索")
+@Api(description = "es搜索")
 @Slf4j
 @RestController
 @RequestMapping("/elastic")
