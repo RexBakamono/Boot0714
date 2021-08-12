@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.Map;
 
-@Api(value = "消息队列")
+@Api(description = "消息队列")
 @RestController
 @RequestMapping("/mq")
 public class RabbitController {
